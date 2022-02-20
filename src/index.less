@@ -1,0 +1,27 @@
+@import '~antd/es/style/default';
+
+.menu {
+  border-right: 1px solid @border-color-split;
+}
+.menuItem {
+  padding: 16px 8px;
+  color: @text-color-secondary;
+  border-bottom: 1px dashed @border-color-split;
+
+  cursor: pointer;
+  transition: all 150ms @ease-base-in;
+  &:hover {
+    background-color: hsla(0, 0, 0, 0.03);
+    border-radius: 8px;
+  }
+}
+
+.textActive {
+  color: @primary-color;
+}
+
+.img {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}

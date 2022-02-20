@@ -1,0 +1,19 @@
+@import '~antd/es/style/default';
+
+.dot {
+  :global {
+    .ant-badge-count {
+      font-weight: bold;
+      color: @text-color-secondary;
+      background-color: @disabled-bg;
+    }
+  }
+}
+
+.dotActive {
+  :global {
+    .ant-badge-count {
+      background-color: @primary-color;
+    }
+  }
+}

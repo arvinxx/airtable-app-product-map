@@ -1,5 +1,12 @@
-import React from "react";
-import { initializeBlock } from "@airtable/blocks/ui";
-import App from "./App";
+import React from 'react';
+import { initializeBlock } from '@airtable/blocks/ui';
+import { Provider } from 'react-redux';
 
-initializeBlock(() => <App />);
+import App from './App';
+import { store } from './store';
+
+initializeBlock(() => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+));
