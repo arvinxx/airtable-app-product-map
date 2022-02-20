@@ -5,5 +5,7 @@ export const useBaseTable = () => {
   const globalConfig = useGlobalConfig();
   const base = useBase();
 
-  return base.getTable(globalConfig.get(GlobalSettingsKeys.tableId) as string);
+  return base.getTableByIdIfExists(
+    globalConfig.get(GlobalSettingsKeys.tableId) as string
+  );
 };

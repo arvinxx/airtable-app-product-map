@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import styles from './index.less';
 
-import { Settings, FlowTabs, Dot } from './components';
+import { FormSettings, DrawerSettings, FlowTabs, Dot } from './components';
 
 import { useAppSelector } from './store';
 import { globalAction } from './features/global';
@@ -17,11 +17,12 @@ const App: FC = () => {
   );
   const dispatch = useDispatch();
 
-  const data = useDataFromTableFields();
+  const { data, isEmpty } = useDataFromTableFields();
 
   // 当 data 变化时 设置第一项为激活项
   useEffect(() => {
-    dispatch(globalAction.setActiveTabKey(data[0].id));
+    if (isEmpty) return;
+    dispatch(globalAction.setActiveTabKey(data?.[0].id));
   }, []);
 
   const itemList = useMemo(() => {
@@ -34,15 +35,17 @@ const App: FC = () => {
   useEffect(() => {
     if (!activeTabKey) return;
 
-    dispatch(globalAction.setActiveItemKey(itemList[0].id));
+    dispatch(globalAction.setActiveItemKey(itemList?.[0].id));
   }, [activeTabKey]);
 
   const detailNode = useMemo(() => {
     return itemList.find((i) => i.id === activeItemKey);
   }, [itemList, activeItemKey]);
 
-  console.log(data);
-  return (
+  console.log(detailNode);
+  return isEmpty ? (
+    <FormSettings />
+  ) : (
     <Flexbox>
       <FlowTabs
         flowList={data}
@@ -75,10 +78,14 @@ const App: FC = () => {
           ))}
         </Flexbox>
         <Flexbox style={{ flex: 2 }} padding={'0 16px'}>
-          {detailNode?.image ? (
-            <div className={styles.img}>
-              <Image src={detailNode.image} />
-            </div>
+          {detailNode?.images.length > 0 ? (
+            detailNode?.images.map((i) => {
+              return (
+                <div key={i} className={styles.img}>
+                  <Image src={i} />
+                </div>
+              );
+            })
           ) : (
             <Flexbox height={300} distribution={'center'}>
               <Empty description={'暂无图片'} />
@@ -86,8 +93,7 @@ const App: FC = () => {
           )}
         </Flexbox>
       </Flexbox>
-
-      <Settings />
+      <DrawerSettings />
     </Flexbox>
   );
 };

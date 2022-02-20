@@ -10,29 +10,31 @@ export const useDataFromTableFields = () => {
   const globalConfig = useGlobalConfig();
 
   const viewId = globalConfig.get(GlobalSettingsKeys.viewId) as string;
-  const view = table.getViewByIdIfExists(viewId);
+  const view = table?.getViewByIdIfExists(viewId);
 
   const flowFieldId = globalConfig.get(
     GlobalSettingsKeys.flowFieldId
   ) as string;
-  const flowField = table.getFieldByIdIfExists(flowFieldId);
+  const flowField = table?.getFieldByIdIfExists(flowFieldId);
 
   const urlFieldId = globalConfig.get(GlobalSettingsKeys.urlFieldId) as string;
-  const urlField = table.getFieldByIdIfExists(urlFieldId);
+  const urlField = table?.getFieldByIdIfExists(urlFieldId);
 
   const imageFieldId = globalConfig.get(
     GlobalSettingsKeys.imageFieldId
   ) as string;
-  const imageField = table.getFieldByIdIfExists(imageFieldId);
+  const imageField = table?.getFieldByIdIfExists(imageFieldId);
 
   const descriptionFieldId = globalConfig.get(
     GlobalSettingsKeys.descriptionId
   ) as string;
-  const descriptionField = table.getFieldByIdIfExists(descriptionFieldId);
+  const descriptionField = table?.getFieldByIdIfExists(descriptionFieldId);
 
   const records = useRecords(view);
 
   const data = useMemo(() => {
+    if (!records) return [];
+
     return getProductData(records, {
       flowField,
       urlField,
@@ -41,5 +43,5 @@ export const useDataFromTableFields = () => {
     });
   }, [records, flowField, urlField, imageField]);
 
-  return data;
+  return { data, isEmpty: data.length === 0 };
 };
