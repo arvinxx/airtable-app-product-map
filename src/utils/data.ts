@@ -28,7 +28,7 @@ export const getProductData = (
     const children = records
       .map((r) => {
         const flowCell = r.getCellValue(flowField) as Field;
-        if (flowCell.id !== flowChoices.id) return;
+        if (flowCell?.id !== flowChoices.id) return;
 
         const images =
           (r.getCellValue(imageField) as any[])?.map((i) => i.url) || [];
@@ -37,7 +37,6 @@ export const getProductData = (
           id: r.id,
           description: r.getCellValueAsString(descriptionField),
           images,
-          url: r.getCellValueAsString(urlField),
         };
       })
       .filter((i) => i);
