@@ -5,7 +5,7 @@ export interface BaseNode {
 
 export interface TypeNode extends BaseNode {
   description: string;
-  image: string;
+  images: string[];
 }
 
 export interface FlowNode extends BaseNode {

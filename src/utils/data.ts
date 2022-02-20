@@ -30,11 +30,13 @@ export const getProductData = (
         const flowCell = r.getCellValue(flowField) as Field;
         if (flowCell.id !== flowChoices.id) return;
 
+        const images =
+          (r.getCellValue(imageField) as any[])?.map((i) => i.url) || [];
         return {
           title: r.name,
           id: r.id,
           description: r.getCellValueAsString(descriptionField),
-          image: r.getCellValueAsString(imageField),
+          images,
           url: r.getCellValueAsString(urlField),
         };
       })
